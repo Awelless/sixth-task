@@ -1,0 +1,29 @@
+{
+    "vans": [
+        {
+            "id": 1,
+            "priority": true,
+            "loaded": true
+        },
+        {
+            "id": 2,
+            "priority": false,
+            "loaded": true
+        },
+        {
+            "id": 3,
+            "priority": false,
+            "loaded": false
+        },
+        {
+            "id": 4,
+            "priority": true,
+            "loaded": false
+        },
+        {
+            "id": 5,
+            "priority": false,
+            "loaded": true
+        }
+    ]
+}
