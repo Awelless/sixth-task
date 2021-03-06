@@ -1,11 +1,14 @@
 package com.epam.task.sixth;
 
+import com.epam.task.sixth.data.DataException;
+import com.epam.task.sixth.data.JsonReader;
 import com.epam.task.sixth.entity.Van;
 import com.epam.task.sixth.entity.Vans;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -22,8 +25,17 @@ public class Application {
     private static final Logger LOGGER = LogManager.getLogger(Application.class);
     private static final String INPUT = "./src/main/resources/vans.json";
 
-    public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
-        List<Van> vans = readData();
+    public static void main(String[] args) throws ExecutionException, InterruptedException, DataException {
+        JsonReader jsonReader = new JsonReader();
+
+        List<Van> vans;
+
+        try {
+            vans = jsonReader.read(INPUT);
+        } catch (DataException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw e;
+        }
 
         ExecutorService executorService = Executors.newFixedThreadPool(vans.size());
 
@@ -31,27 +43,13 @@ public class Application {
                 .map(executorService::submit)
                 .collect(Collectors.toList());
 
+        executorService.shutdown();
+
         for (Future<?> future : futures) {
             future.get();
         }
 
-        executorService.shutdown();
-
+        System.out.println("Vans after processing:");
         vans.forEach(System.out::println);
-    }
-
-    private static List<Van> readData() throws IOException {
-        try {
-            Path inputPath = Paths.get(INPUT);
-            String inputData = String.join("\n", Files.readAllLines(inputPath));
-
-            ObjectMapper objectMapper = new ObjectMapper();
-            Vans vansWrapper = objectMapper.readValue(inputData, Vans.class);
-            return vansWrapper.getVans();
-
-        } catch (IOException e) {
-            LOGGER.fatal(e.getMessage(), e);
-            throw e;
-        }
     }
 }

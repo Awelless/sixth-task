@@ -6,7 +6,16 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="com.epam.task.second.data.FileDataReader" level="ERROR" additivity="false">
+        <Logger name="com.epam.task.sixth.Application" level="ERROR" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="com.epam.task.sixth.entity.Van" level="ERROR" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="com.epam.task.sixth.entity.Base" level="ERROR" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="com.epam.task.sixth.entity.Terminal" level="INFO" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
         <Root level="error">

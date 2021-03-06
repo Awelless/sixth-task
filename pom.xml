@@ -32,6 +32,14 @@
             <artifactId>log4j-core</artifactId>
             <version>2.14.0</version>
         </dependency>
+
+        <!--TESTING-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.1</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 </project>
